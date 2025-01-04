@@ -37,15 +37,13 @@ There are two separate analyses just to experiment how crucial hyperparameter tu
 
 ### Observation(4x4)
 
-
-> `![MC 4x4 Plot](images/mc_4x4.png)`
+![MC 4x4 Plot](images/mc_4x4.png)
 
 The MC was implemented with discount factor as 0.9, it showed an initial rapid change in the value of the initial state V(0), and it’s followed by stabilization. It has a larger initial value because the estimates are updated only at the end of each episode. As we increase the number of episodes the estimate will converge to a true value.
 
 ### Observation(8x8)
 
-
-> `![MC 8x8 Plot](images/mc_8x8.png)`
+![MC 8x8 Plot](images/mc_8x8.png)
 
 As the grid size increased to 8X8 we can observe a greater initial spike and gradually it get very close to the true value. Because of the increased state space we can see delay in stabilization.
 
@@ -59,15 +57,13 @@ Convergence is observed later in 8X8 when compared with 4X4, possibly because of
 
 ### Observation(4x4)
 
-  
-> `![TD 4x4 Plot α=0.01](images/td_4x4_alpha001.png)`
+![TD 4x4 Plot α=0.01](images/td_4x4_alpha001.png)
 
 This is the lowest value of alpha implemented here for the frozen lake with slipping, the plot shows a stable increase in value estimate, this lower alpha is minimizing the oscillation.
 
 ### Observation(8x8)
 
-
-> `![TD 8x8 Plot α=0.01](images/td_8x8_alpha001.png)`
+![TD 8x8 Plot α=0.01](images/td_8x8_alpha001.png)
 
 Similar to 4X4 grid, 8X8 shows a stable convergence at a lower learning rate making it suitable for the larger slippery grid.
 
@@ -81,9 +77,7 @@ It aligns with our expectation as smaller learning rate (α = 0.01) will lead to
 
 ### Observation(4X4) and (8X8)
 
-> **Add your TD(0) 4x4 & 8x8 Convergence Plots (α>0.01) here**  
-> `![TD 4x4 α=0.02 or 0.03](images/td_4x48x8_alpha_high.jpg)`  
-
+![TD 4x4 α=0.02 or 0.03](images/td_4x48x8_alpha_high.jpg)
 
 For both grid sizes we can see that higher learning rates such as 0.02, 0.03 we observe a faster update in the value estimate for each step but it results in plots that are unclear because of the oscillations in the value estimate. This suggests that these values of alpha may be too high to reach convergence. Even though we reach close to the true value its hard because the values wont settle and continue to fluctuate.
 
@@ -93,15 +87,13 @@ For both grid sizes we can see that higher learning rates such as 0.02, 0.03 we 
 
 ### Observation(4x4)
 
-
-> `![4x4 Comparison TD(0) vs MC](images/comparison_4x4_td_mc.png)`
+![4x4 Comparison TD(0) vs MC](images/comparison_4x4_td_mc.png)
 
 Monte Carlo reaches close to the stable value very quickly, while TD(0) continue to increase, because of the average over complete episodes MC appears to converge closer to the true value faster.
 
 ### Observation(8x8)
 
-
-> `![8x8 Comparison TD(0) vs MC](images/comparison_8x8_td_mc.png)`
+![8x8 Comparison TD(0) vs MC](images/comparison_8x8_td_mc.png)
 
 Monte Carlo in 8x8 grid converges more slowly and takes significantly more episodes to stabilize compared to TD(0) with learning rate as 0.01. Hyperparameters like alpha have significant effect on TD which make it very sensitive.
 
@@ -115,8 +107,7 @@ In 4x4 when we are considering learning rate as 0.01, which is less so Monte Car
 
 ### Observation
 
-
-> `![Combined TD & MC](images/td_mc_combined.png)`
+![Combined TD & MC](images/td_mc_combined.png)
 
 With this plot we can analyse the trade-offs of choosing a higher alpha, we can either go for learning rate as low as 0.01 for better stability or Monte Carlo method which demonstrates quicker convergence particularly when TD(0) is using a small learning rate.
 
@@ -126,8 +117,7 @@ We can conclude that in this environment 4X4 and 8x8 Monte Carlo has more stable
 
 ## TD Convergence for different α-alpha
 
-
-> `![TD Convergence for different alpha](images/td_different_alpha.png)`
+![TD Convergence for different alpha](images/td_different_alpha.png)
 
 (The plots in this subsection may look disturbing, but in order to obtain meaningful insight comparing different TD with varying alpha this subsection is implemented)
 
@@ -141,7 +131,7 @@ Similarly, Here the convergence relies heavily on the learning rate as well, sma
 
 ### Stability
 
-In both 4X4 and 8X8, with a higher α-alpha, we observe that the value estimator is unstable and oscillate heavily (example α = 0.1) , clearly this higher alpha is not stable to update the value estimates. A lower α-alpha (example α =0.01) on the other hand reduces the oscillation or fluctuation but a lower alpha will converge more slowly, we may have increase the number of episodes.
+In both 4X4 and 8X8, with a higher α-alpha, we observe that the value estimator is unstable and oscillate heavily (example α = 0.1) , clearly this higher alpha is not stable to update the value estimates. A lower α-alpha (example α = 0.01) on the other hand reduces the oscillation or fluctuation but a lower alpha will converge more slowly, we may have increase the number of episodes.
 
 ---
 
@@ -163,8 +153,7 @@ In order to incorporate Epsilon Greedy with learning Rate we are using SARSA(On-
 
 ### Observation
 
-
-> `![SARSA with Epsilon Greedy Plot](images/sarsa_epsilon_greedy.png)`
+![SARSA with Epsilon Greedy Plot](images/sarsa_epsilon_greedy.png)
 
 ### Learning Rate Sensitivity
 
@@ -174,10 +163,10 @@ Similar to Analysis 1, even with Epsilon Greedy action selection we observe rela
 
 If we notice the plot carefully, we can observe that the three colour in the lower(red,blue,brown) all of these have a Epsilon of 0.5. The colours converging together at the top have a Epsilon of 0.2. Its clear that irrespective of the learning rate the value of epsilon played a crucial role in the convergence
 
-**Higher (Epsilon = 0.5):**
+**Higher (Epsilon = 0.5):**  
 Encourages exploration and is crucial early stages or in high-variance environments like the slippery Frozen Lake. We can observe a slower initial convergence due to frequent random action, this is the reason why the three colours in the lower(red, blue, brown) form like that.
 
-**Lower (Epsilon = 0.2):**
+**Lower (Epsilon = 0.2):**  
 Faster initial convergence due to the more exploration of the current best policy.
 
 ---
